@@ -1,7 +1,6 @@
 import java.util.*;
 import java.io.*;
 public class Main{
-    static ArrayList<ArrayList<Node>> arr = new ArrayList<>();
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -10,11 +9,12 @@ public class Main{
         int E = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(br.readLine());
 
+        ArrayList<ArrayList<Node>> arr = new ArrayList<>();
         boolean[] visited = new boolean[V+1];
         int[] result = new int[V+1];
         for(int i=0;i<=V;i++){
-            arr.add(new ArrayList<Node>());
             result[i]=Integer.MAX_VALUE;
+            arr.add(new ArrayList<Node>());
         }
 
         for(int i=0;i<E;i++){
@@ -24,14 +24,14 @@ public class Main{
             int w = Integer.parseInt(st.nextToken());
             arr.get(u).add(new Node(v,w));
         }
-        PriorityQueue<Node> q = new PriorityQueue<>((a,b)->a.weight-b.weight);
         result[K]=0;
+        PriorityQueue<Node> q = new PriorityQueue<>((a,b)->a.weight-b.weight);
         q.add(new Node(K,0));
         while(!q.isEmpty()){
             Node now = q.poll();
             visited[now.end]=true;
             for(Node next : arr.get(now.end)){
-                if(!visited[next.end] && now.weight+ next.weight<result[next.end]){
+                if(!visited[next.end] && now.weight+next.weight<result[next.end]){
                     result[next.end]=now.weight+next.weight;
                     q.add(new Node(next.end,result[next.end]));
                 }
@@ -48,8 +48,8 @@ public class Main{
         bw.flush();
     }
     static class Node{
-        int weight;
         int end;
+        int weight;
         public Node(int end,int weight){
             this.end=end;
             this.weight=weight;
