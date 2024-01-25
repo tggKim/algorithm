@@ -26,3 +26,7 @@
 
  <p>출력은 예제를 보고 ”You get __ piece(s) and your dad gets __ piece(s).” 형식에 맞추어 적절하게 출력하라.</p>
 
+ ### 해설
+
+ <p>놀았다 ㅋ</p>
+
