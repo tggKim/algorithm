@@ -1,68 +1,63 @@
 import java.util.*;
 import java.io.*;
 
-public class Main{
+public class Main {
     
-    static boolean[][] visited;
     static int[][] arr;
+    static boolean[][] visited;
+    static int[] calx = {0, 0, 1, -1};
+    static int[] caly = {1, -1, 0, 0};
     
-    static int[] calx = {0,0,1,-1};
-    static int[] caly = {1,-1,0,0};
-    
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
         
-        arr = new int[N][M];
-        visited = new boolean[N][M];
+        arr = new int[n][m];
+        visited = new boolean[n][m];
         
-        for(int i=0;i<N;i++){
+        for(int i = 0; i < n; i++) {
             String str = br.readLine();
-            for(int j=0;j<M;j++){
-                arr[i][j] = str.charAt(j) - '0'; 
+            for(int j = 0; j < str.length(); j++) {
+                arr[i][j] = Integer.parseInt(String.valueOf(str.charAt(j)));
             }
         }
         
-        bfs(0, 0);
+        bfs(0,0);
     }
     
-    static void bfs(int x, int y){
+    static void bfs(int x, int y) {
+        Deque<Integer> dequeX = new ArrayDeque<>();
+        Deque<Integer> dequeY = new ArrayDeque<>();
+        dequeX.addLast(x);
+        dequeY.addLast(y);
         visited[x][y] = true;
-        Queue<A> q = new LinkedList<>();
-        q.add(new A(x, y, 1));
-                
-        while(!q.isEmpty()){
-            A a = q.poll();
-            int qx = a.x;
-            int qy = a.y;
+        
+        while(!dequeX.isEmpty()) {
+            int firstX = dequeX.removeFirst();
+            int firstY = dequeY.removeFirst();
             
-            for(int i=0;i<4;i++){
-                int newX = qx + calx[i];
-                int newY = qy + caly[i];
-                if(newX>=0 && newY>=0 && newX<arr.length && newY<arr[0].length && !visited[newX][newY] && arr[newX][newY] == 1){
-                    if(newX == arr.length-1 && newY == arr[0].length-1){
-                        System.out.println(a.count+1);
+            for(int i = 0; i < 4; i++) {
+                int resultX = firstX + calx[i];
+                int resultY = firstY + caly[i];
+                
+                if(resultX >= 0 && resultX < arr.length && resultY >= 0 && resultY < arr[0].length && arr[resultX][resultY] != 0 && !visited[resultX][resultY]) {
+                    dequeX.addLast(resultX);
+                    dequeY.addLast(resultY);
+                    arr[resultX][resultY] = arr[firstX][firstY] + 1;
+                    visited[resultX][resultY] = true;
+
+                    if(resultX == arr.length - 1 && resultY == arr[0].length - 1) {
+                        System.out.println(arr[firstX][firstY] + 1);
                         return;
                     }
-                    visited[newX][newY] = true;
-                    q.add(new A(newX, newY, a.count+1));
                 }
+                
             }
         }
+        
     }
     
-    static class A{
-        public int x;
-        public int y;
-        public int count;
-        
-        public A(int x, int y, int count){
-            this.x = x;
-            this.y = y;
-            this.count = count;
-        }
-    }
 }
