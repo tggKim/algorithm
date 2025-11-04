@@ -1,68 +1,88 @@
 import java.util.*;
 import java.io.*;
-public class Main{
-    public static void main(String[] args)throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
 
-        int[] result = new int[n+1];
-        int[] count = new int[n+1];
-        boolean[] visited = new boolean[n+1];
-        ArrayList<ArrayList<Node>> arr = new ArrayList<>();
-        for(int i=0;i<=n;i++){
-            arr.add(new ArrayList<Node>());
-            result[i]=Integer.MAX_VALUE;
-        }
+public class Main {
+	
+	static List<Node>[] list;
+	static boolean[] visited;
+	static long[] answer;
+	static int[] path;
 
-        for(int i=0;i<m;i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
-            int z = Integer.parseInt(st.nextToken());
-            arr.get(x).add(new Node(y,z));
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int n = Integer.parseInt(br.readLine());
+		int m = Integer.parseInt(br.readLine());
+		
+		list = new ArrayList[n + 1];
+		visited = new boolean[n + 1];
+		answer = new long[n + 1];
+		path = new int[n + 1];
+		for(int i = 0; i <= n; i++) {
+			list[i] = new ArrayList<>();
+			answer[i] = Integer.MAX_VALUE;
+		}
+		
+		for(int i = 0; i < m; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
+			
+			list[a].add(new Node(b, c, 0));
+		}
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int start = Integer.parseInt(st.nextToken());
+		int end = Integer.parseInt(st.nextToken());
+		
+		PriorityQueue<Node> q = new PriorityQueue<>((a, b) -> Long.compare(a.weight, b.weight));
+		q.add(new Node(start, 0, start));
+		answer[start] = 0;
+		
+		while(!q.isEmpty()) {
+			Node now = q.poll();
+			
+			if(visited[now.number]) {
+				continue;
+			}
+			visited[now.number] = true;
+			path[now.number] = now.before;
+			
+			for(Node next : list[now.number]) {
+				if(answer[next.number] > answer[now.number] + next.weight) {
+					answer[next.number] = answer[now.number] + next.weight;
+					q.add(new Node(next.number, answer[next.number], now.number));
+				}
+			}
+		}
+		
+        // 경로 복원
+        List<Integer> route = new ArrayList<>();
+        for (int cur = end; cur != start; cur = path[cur]) {
+            route.add(cur);
         }
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int x = Integer.parseInt(st.nextToken());
-        int y = Integer.parseInt(st.nextToken());
+        route.add(start);
+        Collections.reverse(route);
 
-        PriorityQueue<Node> q = new PriorityQueue<>((a,b)->a.weight-b.weight);
-        result[x]=0;
-        q.add(new Node(x,0));
-        while(!q.isEmpty()){
-            Node now = q.poll();
-            visited[now.end]=true;
-            if(result[now.end]<now.weight){
-                continue;
-            }
-            for(Node next : arr.get(now.end)){
-                if(!visited[next.end] && now.weight+next.weight<result[next.end]){
-                    result[next.end]=now.weight+next.weight;
-                    count[next.end]=now.end;
-                    q.add(new Node(next.end,result[next.end]));
-                }
-            }
+        // 출력
+        System.out.println(answer[end]);
+        System.out.println(route.size());
+        for (int city : route) {
+            System.out.print(city + " ");
         }
-        System.out.println(result[y]);
-        Stack<Integer> s = new Stack<>();
-        s.push(y);
-        while(count[y]!=0){
-            s.push(count[y]);
-            y=count[y];
-        }
-        System.out.println(s.size());
-        while(!s.empty()){
-            bw.write(s.pop()+" ");
-        }
-        bw.flush();
-    }
-    static class Node{
-        int end;
-        int weight;
-        Node(int end,int weight){
-            this.end=end;
-            this.weight=weight;
-        }
-    }
+		
+	}
+	
+	static class Node {
+		int number;
+		long weight;
+		int before;
+		
+		Node(int number, long weight, int before) {
+			this.number = number;
+			this.weight = weight;
+			this.before = before;
+		}
+	}
 }
