@@ -8,16 +8,9 @@ public class Main {
 				break;
 			}
 			
-			int end = str.length() / 2;
-			boolean flag = true;
-			for(int i = 0; i <= end; i++) {
-				if(str.charAt(i) != str.charAt(str.length() - 1 - i)) {
-					flag = false;
-					break;
-				}
-			}
+			String reversed = new StringBuilder(str).reverse().toString();
 			
-			if(flag) {
+			if(str.equals(reversed)) {
 				System.out.println("yes");
 			} else {
 				System.out.println("no");
