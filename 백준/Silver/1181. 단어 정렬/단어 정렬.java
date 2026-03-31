@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -10,22 +11,18 @@ public class Main {
 		List<String> list = new ArrayList<>();
 		
 		for(int i = 0; i < N; i++) {
-            String str = br.readLine();
-            if(!list.contains(str)){
-                list.add(str);   
-            }
+			list.add(br.readLine());
 		}
 		
-		Collections.sort(list, (a1, a2) -> {
-			if(a1.length() != a2.length()) {
-				return a1.length() - a2.length();
-			} else {
-				return a1.compareTo(a2);
-			}
-		});
+		List<String> answer = list.stream()
+			.distinct()
+			.sorted((a1, a2) -> {
+				return a1.length() == a2.length() ? a1.compareTo(a2) : a1.length() - a2.length();
+			})
+			.collect(Collectors.toList());
 		
-		for(int i = 0; i < list.size(); i++) {
-			bw.write(list.get(i) + "\n");
+		for(int i = 0; i < answer.size(); i++) {
+			bw.write(answer.get(i) + "\n");
 		}
 		
 		bw.flush();
