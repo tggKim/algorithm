@@ -5,27 +5,19 @@ public class Main {
 		
 		int N = s.nextInt();
 		
-		if(N % 5 == 0) {
-			System.out.println(N / 5);
-			return;
-		} 
-		
 		int count = 0;
-		while(true) {
+		while(N >= 0) {
 			if(N % 5 == 0) {
-				break;
-			}
-            
-			N -= 3;
-			if(N < 0) {
-				System.out.println(-1);
+				count += (N / 5);
+				System.out.println(count);
 				return;
 			}
+			
+			N -= 3;
 			count++;
 		}
 		
-		count += (N / 5);
-		
-		System.out.println(count);
+		System.out.println(-1);
 	}
+	
 }
