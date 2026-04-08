@@ -10,15 +10,15 @@ public class Main {
 		for(int i = 0; i < K; i++) {
 			int num = Integer.parseInt(br.readLine());
 			if(num == 0) {
-				s.removeLast();
+				s.pop();
 			} else {
-				s.addLast(num);
+				s.push(num);
 			}
 		}
 		
 		int sum = 0;
 		while(!s.isEmpty()) {
-			sum += s.removeLast();
+			sum += s.pop();
 		}
 		
 		System.out.println(sum);
