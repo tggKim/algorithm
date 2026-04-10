@@ -18,11 +18,10 @@ public class Main {
 		int M = Integer.parseInt(br.readLine());
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < M; i++) {
-			int num = Integer.parseInt(st.nextToken());
-			if(binarySearch(arr, num)) {
-				bw.write("1\n");
+			if(binarySearch(arr, Integer.parseInt(st.nextToken()))) {
+				bw.write(1 + "\n");
 			} else {
-				bw.write("0\n");
+				bw.write(0 + "\n");
 			}
 		}
 		
@@ -31,17 +30,17 @@ public class Main {
 	}
 	
 	static boolean binarySearch(int[] arr, int target) {
-		int left = 0;
-		int right = arr.length - 1;
+		int start = 0;
+		int end = arr.length - 1;
 		
-		while(left <= right) {
-			int mid = (left + right) / 2;
+		while(start <= end) {
+			int mid = (start + end) / 2;
 			if(arr[mid] == target) {
 				return true;
 			} else if(arr[mid] < target) {
-				left = mid + 1;
-			} else {
-				right = mid - 1;
+				start = mid + 1;
+			} else if(arr[mid] > target) {
+				end = mid - 1;
 			}
 		}
 		
