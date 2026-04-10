@@ -6,10 +6,10 @@ public class Main {
 		int T = Integer.parseInt(br.readLine());
 		
 		for(int i = 0; i < T; i++) {
-			PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((a1, a2) -> {
+			PriorityQueue<Integer> pq = new PriorityQueue<>((a1, a2) -> {
 				return a2 - a1;
 			});
-			Deque<A> q = new ArrayDeque<>();
+			Deque<Document> q = new ArrayDeque<>();
 			
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int N = Integer.parseInt(st.nextToken());
@@ -18,35 +18,33 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			for(int j = 0; j < N; j++) {
 				int priority = Integer.parseInt(st.nextToken());
-				q.offer(new A(j, priority));
-				priorityQueue.add(priority);
+				q.offer(new Document(j, priority));
+				pq.add(priority);
 			}
 			
 			int count = 1;
 			while(!q.isEmpty()) {
-				A a = q.peek();
-				int number = priorityQueue.peek();
-				if(a.y >= number) {
-					q.poll();
-					priorityQueue.poll();
-					if(a.x == M) {
+				Document document = q.poll();
+				if(document.priority == pq.peek()) {
+					pq.poll();
+					if(document.index == M) {
 						System.out.println(count);
 						break;
 					}
                     count++;
 				} else {
-					q.offer(q.poll());
+					q.offer(document);
 				}
 			}
 		}
 	}
 	
-	static class A {
-		int x;
-		int y;
-		A(int x, int y) {
-			this.x = x;
-			this.y = y;
+	static class Document {
+		int index;
+		int priority;
+		Document(int index, int priority) {
+			this.index = index;
+			this.priority = priority;
 		}
 	}
 }
