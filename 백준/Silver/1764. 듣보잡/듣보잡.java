@@ -18,7 +18,7 @@ public class Main {
 			set.add(str);
 		}
 		
-		for(int i = 0; i < N; i++) {
+		for(int i = 0; i < M; i++) {
 			String str = br.readLine();
 			if(set.contains(str)) {
 				list.add(str);
