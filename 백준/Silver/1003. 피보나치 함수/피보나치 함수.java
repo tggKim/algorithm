@@ -1,17 +1,12 @@
 import java.util.*;
 public class Main {
+	static int[][] arr = new int[41][2];
+	static boolean[] visited = new boolean[41];
+
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		
-		int[] arr1 = new int[41];
-		int[] arr2 = new int[41];
-		
-		arr1[0] = 1;
-		arr2[1] = 1;
-		for(int i = 2; i < 41; i++) {
-			arr1[i] = arr1[i - 1] + arr1[i - 2];
-			arr2[i] = arr2[i - 1] + arr2[i - 2];
-		}
+		dp(40);
 		
 		int T = s.nextInt();
 		
@@ -19,9 +14,34 @@ public class Main {
 		for(int i = 0; i < T; i++) {
 			int number = s.nextInt();
 			
-			sb.append(arr1[number] + " " + arr2[number] + "\n");
+			sb.append(arr[number][0] + " " + arr[number][1] + "\n");
 		}
 		
 		System.out.println(sb);
+	}
+	
+	static void dp(int number) {
+		if(visited[number]) {
+			return;
+		}
+		
+		if(number == 0) {
+			arr[0][0] = 1;
+			arr[0][1] = 0;
+			visited[number] = true;
+			return;
+		} else if(number == 1) {
+			arr[1][0] = 0;
+			arr[1][1] = 1;
+			visited[number] = true;
+			return;
+		}
+		
+		dp(number - 1);
+		dp(number - 2);
+		
+		arr[number][0] = arr[number - 1][0] + arr[number - 2][0];
+		arr[number][1] = arr[number - 1][1] + arr[number - 2][1];
+		visited[number] = true;
 	}
 }
