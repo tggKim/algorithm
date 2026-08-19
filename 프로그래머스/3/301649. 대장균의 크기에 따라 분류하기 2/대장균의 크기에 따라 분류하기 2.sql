@@ -1,0 +1,17 @@
+SELECT 
+    T1.ID
+,   CASE T1.NUM
+        WHEN 1 THEN 'CRITICAL'
+        WHEN 2 THEN 'HIGH'
+        WHEN 3 THEN 'MEDIUM'
+        ELSE 'LOW'
+    END
+FROM (
+    SELECT 
+        ID
+    ,   NTILE(4) OVER(
+            ORDER BY SIZE_OF_COLONY DESC
+        ) AS NUM
+    FROM ECOLI_DATA
+) T1
+ORDER BY T1.ID
