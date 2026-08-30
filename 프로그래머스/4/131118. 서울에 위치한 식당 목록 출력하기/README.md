@@ -1,10 +1,10 @@
 # [level 4] 서울에 위치한 식당 목록 출력하기 - 131118 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131118?language=oracle) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131118) 
 
 ### 성능 요약
 
-메모리: 0.0 MB, 시간: 0.00 ms
+메모리: undefined, 시간: 
 
 ### 구분
 
@@ -12,11 +12,11 @@
 
 ### 채점결과
 
-Empty
+합계: 100.0 / 100.0
 
 ### 제출 일자
 
-2025년 05월 14일 20:24:47
+2026년 08월 30일 13:20:27
 
 ### 문제 설명
 
