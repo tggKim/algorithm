@@ -4,16 +4,12 @@ class Solution {
         Map<String, Integer> map = new HashMap<>();
         
         for(String user: participant) {
-            if(map.get(user) != null) {
-                map.put(user, map.get(user) + 1);        
-            } else {
-                map.put(user, 1);
-            }
+            map.merge(user, 1, Integer::sum);
         }
                         
         for(String user: completion) {
             if(map.get(user) > 1) {
-                map.put(user, map.get(user) - 1);
+                map.merge(user, -1, Integer::sum);
             } else {
                 map.remove(user);
             }
