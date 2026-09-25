@@ -4,14 +4,15 @@ class Solution {
         int answer = 0;
         
         Queue<Long> pq = new PriorityQueue<>();
-        for(int val : scoville) {
-            pq.offer(Long.valueOf(val));
+        for(long val : scoville) {
+            pq.offer(val);
         }
         
         while(pq.size() >= 2 && pq.peek() < K) {
             long num1 = pq.poll();
             long num2 = pq.poll();
-            pq.offer(num1 + (num2 * 2));
+            
+            pq.offer(num1 + num2 * 2);
             answer++;
         }
         
