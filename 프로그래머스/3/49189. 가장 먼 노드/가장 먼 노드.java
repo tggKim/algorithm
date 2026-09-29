@@ -19,6 +19,7 @@ class Solution {
         
         Queue<Integer> q = new ArrayDeque<>();
         q.offer(1);
+        visited[1] = true;
         while(!q.isEmpty()) {
             int num = q.poll();
             for(int i : list.get(num)) {
